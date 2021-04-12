@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Interview System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    
+</head>
+<script>
+
+    var sec = '{{question.max_time_in_sec}}';
+    var time = setInterval(myTimer, 1000);
+
+
+    function myTimer() {
+        document.getElementById('timer').value = sec.toString();
+        
+        sec--;
+        if (sec == -1) {
+            clearInterval(time);
+            document.getElementById('myquiz').submit();                
+        }
+    }
+  
+
+    if (window.performance) {
+        console.info("window.performance works fine on this browser");
+    }
+    console.info(performance.navigation.type);
+    
+    if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+        console.info( "This page is reloaded" );
+        myFunction()
+    } 
+    else {
+        console.info( "This page is not reloaded");
+    }
+
+    function myFunction() {
+        var a = "{% url 'home' %}"
+        document.location.href = a;
+       
+    }
+    window.onpopstate = function() {
+        var a = "{% url 'home' %}"
+        document.location.href = a;
+}; history.pushState({}, '');
+    
+    
+
+</script>
+
+
+<body>
+    <div class="container">
+    <h2>{{question}}</h2>
+
+    <form id ="myquiz" method="POST" action="{% url 'AnswerReader' question_pk=question.pk user_pk=user_pk test_pk=test_pk attempt=attempt%}" >
+    {% csrf_token %}
+    {%for option in question.options.all%}
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="answer" value="{{ option }}" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">{{option}}</label>
+      </div>
+    {%endfor%}
+    <br>
+    <div class="">
+        <h4 style="color:#FF0000;position:absolute;left:70%;top:30%;" align="center" >
+        <span id="iTimeShow">Time Remaining: </span>
+        <input id="timer" name ="timer" readonly="true" style="font-size:20px;width:40px;" size="1"></p>
+    </h4>  
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+</body>
+</html>

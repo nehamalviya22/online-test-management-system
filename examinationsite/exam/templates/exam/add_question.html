@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Interview System</title>
+    <link rel="stylesheet" type="text/css" href='{% static "css/multi.min.css" %}' />
+    <script src='{% static "js/multi.min.js" %}'></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar  mynav" role="navigation" id="navbar">
+    <div class="container">
+        <a class="navbar-brand mynav" href="#">
+            <img alt="Brand" width="30" height="30" src="https://i.fbcd.co/products/resized/resized-750-500/3f621b61843917703025a638d02a45375ef25f1e4b288e8bf3c66c698d976220.jpg">
+        </a>
+        <a class="navbar-brand mynav" href="{% url 'AddQuestion' %}">Add Questions</a>
+        <a class="navbar-brand mynav" href="{% url 'AddTest' %}">Add Test</a>
+        <a class="navbar-brand mynav" href="{% url 'UserList' %}">User Details</a>
+        <a class="navbar-brand mynav" href="{% url 'AllTestList' %}">Test List</a>
+        <a class="navbar-brand mynav" href="{% url 'AllQuestionList' %}">Question List</a>
+        
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'logout' %}" class="btn btn-simple">Log out</a></li>
+        </ul>
+    </div>
+    </nav>
+    <div class="container">
+    <form method="POST" action= '' enctype = "multipart/form-data" novalidate id = "Question-form">  
+        {% csrf_token %}  
+        {% for field in form %}  
+        
+        <div class="form-group row" >
+            <div class="col-xs-3">               
+                <label for="{{ field.label }}">{{ field.label }}</label>
+                <div class="controls">
+                    {{ field }}
+                    {% if field.name == 'options' %}
+                    <a href="/option/create" id="add_option" onclick="return showAddPopup(this);"><img src = "{% static '/images/icon-addlink.svg' %}"></a>
+                    {% endif %}
+
+                </div>          
+                {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                {% endfor %}
+  
+            </div>
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Save</button>  
+        <button type="submit" class="btn btn-primary" name="continue-editing">Save and continue editing</button>
+        
+        <br><br>
+    </form> 
+</div> 
+
+<script>
+    function showAddPopup(triggeringLink) {
+        var name = triggeringLink.id.replace(/^add_/, '');
+        href = triggeringLink.href;
+        var win = window.open(href, name, 'height=500,width=800,resizable=yes,scrollbars=yes');
+        win.focus();
+        return false;
+    }
+    function closePopup(win, newID, newRepr, id) {
+        $(id).append('<option value=' + newID + ' selected >' + newRepr + '</option>')
+        win.close();
+    }
+
+    var select = document.getElementById("id_options");
+     multi(select, {
+        enable_search: true
+    });
+
+    var select = document.getElementById("id_correct_answer");
+     multi(select, {
+        enable_search: true
+    });
+    
+</script>
+
+</body>
+</html>

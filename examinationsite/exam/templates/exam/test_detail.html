@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Interview System</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+</head>
+<script>
+</script>
+<body>
+
+    <nav class="navbar  mynav" role="navigation" id="navbar">
+        <div class="container">
+            <a class="navbar-brand mynav" href="#">
+                <img alt="Brand" width="30" height="30" src="https://i.fbcd.co/products/resized/resized-750-500/3f621b61843917703025a638d02a45375ef25f1e4b288e8bf3c66c698d976220.jpg">
+            </a>
+            <a class="navbar-brand mynav" href="{% url 'home' %}">Home</a>
+            <a class="navbar-brand mynav" href="{% url 'TestList' user_pk %}">Test List</a>
+        </div>
+        </nav>
+
+    <div class="container">
+    <h2>Are you ready for {{test}} quiz ?</h2>
+    
+    <h3>Total questions : {{view.total_questions}}</h3>
+
+    <h3>Total Time : {{view.total_time}}</h3>
+    
+    
+
+    <h2>Here you can go !!!</h2>
+    
+    <a class="btn btn-info btn-lg" href="{% url 'QuestionDetail' user_pk test_pk view.get_attempts view.first_question.pk %}" role="button">Start Test</a>
+</div>
+</body>
+</html>
