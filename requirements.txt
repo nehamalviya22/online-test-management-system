@@ -1,0 +1,8 @@
+asgiref==3.3.2
+Django==1.11
+django-collectionfield==0.0.4
+django-six==1.0.4
+django-utils-six==2.0
+pytz==2021.1
+sqlparse==0.4.1
+typing-extensions==3.7.4.3
