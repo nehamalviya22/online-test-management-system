@@ -194,12 +194,6 @@ class Questiondetail(DetailView):
         context['attempt'] = self.kwargs['attempt']
         return context
 
-def Userlist(request):
-    model = UserDetail
-    all_user_detail = UserDetail.objects.all()
-    context = {'all_user_detail':all_user_detail}
-    return render(request,"exam/user_list.html",context)
-
 def Alltests(request,user_pk):
     model = UserAnswer
     all_tests = UserAnswer.objects.filter(user = user_pk).values('test__test_name', 'attempts').distinct().order_by('test__test_name')
@@ -259,16 +253,23 @@ def OptionCreatePopup(request):
     return render(request, "exam/add_option.html", {"form" : form})
 
 @admin_is_logged_in
+def Userlist(request):
+    model = UserDetail
+    all_user_detail = UserDetail.objects.all().order_by('-id')[:]
+    context = {'all_user_detail':all_user_detail}
+    return render(request,"exam/user_list.html",context)
+
+@admin_is_logged_in
 def Alltestlist(request):
     model = Test
-    tests = model.objects.all()
+    tests = model.objects.all().order_by('-id')[:]
     context = {'tests':tests}
     return render(request,"exam/all_test_list.html",context)
 
 @admin_is_logged_in
 def Allquestionlist(request):
     model = Question
-    questions = model.objects.all()
+    questions = model.objects.all().order_by('-id')[:]
     context = {'questions':questions}
     return render(request,"exam/all_question_list.html",context)
 
