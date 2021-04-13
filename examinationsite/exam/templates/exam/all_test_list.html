@@ -6,12 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Interview System</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap.min.css">
+
 </head>
 <body>
   <nav class="navbar  mynav" role="navigation" id="navbar">
@@ -31,22 +34,27 @@
     </div>
     </nav>
     <div class="container">
-        <table class="table table-striped">
+        <table id="example" class="table table-striped" style="width:100%">
             <thead>
               <tr>
                 <th scope="col">Test Name</th>
                 <th scope="col"></th>
               </tr>
-            </thead>
-            {%for test in tests%}
+            </thead> 
             <tbody>
+              {%for test in tests%}
                 <tr>
                   <td>{{test.test_name}}</td>
                   <td><a class="btn btn-danger" href="{% url 'DeleteTest' test.id%}" role="button">Delete</a> </td>
                 </tr>
+                {%endfor%}
               </tbody>
-            {%endfor%}
             </table>
             </div>
+<script>
+$(document).ready(function() {
+    $('#example').DataTable({"ordering": false});
+} );
+</script>
 </body>
 </html>
