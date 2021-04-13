@@ -288,9 +288,8 @@ def Deletetest(request, test_id):
 @admin_is_logged_in
 def Deletequestion(request, question_id):
     question = get_object_or_404(Question, id = question_id)    
-    try:
-        matched_question = Test.objects.get(questions = question)
-    except ObjectDoesNotExist:
+    matched_question = Test.objects.filter(questions = question)
+    if matched_question.count()==0:
         if request.method =="POST":
             question.delete()
             return redirect('AllQuestionList')
