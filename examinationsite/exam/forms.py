@@ -138,7 +138,7 @@ class TestForm(forms.ModelForm):
             'questions': forms.SelectMultiple(
 				attrs={
 					'class': 'form-control',
-                    'id' : 'fruit_select',
+                    'id' : 'test_select',
 					}
 				),
 			}
